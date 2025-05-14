@@ -1,135 +1,150 @@
-body {
-  margin: 0;
-  background: #111;       /* 页面背景保持深色 */
-}
+/* 重置 */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#111; color:#eee; font-family:sans-serif; }
 
-
-/* 整体布局 */
-.game-ui {
-  display: grid;
- border: 20px solid #C26423;
- box-sizing: border-box;
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 1fr 250px;
-  height: 100vh;
-  margin: 0;
-  background: #111;
-  color: #eee;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-/* 顶部状态栏 */
-.top-bar {
-  grid-column: 1 / span 2;
-  background: #222;
-  text-align: center;
-  padding: 10px;
-  font-size: 24px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-/* 主体区 */
-.main { display: contents; }
-
-/* 游戏画面 */
-.game-area {
+/* 左側面板 */
+.left-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-row: 2;
-  grid-column: 1;
-  position: relative;
-  background: #000;
-  overflow: hidden;
+  padding: 10px;
 }
 
-/* 背景图 & 热区 */
-#game {
-  width: 100%;
-  background: url('01.png') no-repeat center;
-  background-size: contain;
-  aspect-ratio: 3667 / 943;
+/* 剩餘時間 */
+.top-bar {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* 控制區域：Flex 排列 */
+.game-area-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* 左右按鈕 */
+.scroll-btn {
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  width: 40px; height: 40px;
+  cursor: pointer;
+  margin: 0 5px;
+  flex-shrink: 0;
+}
+
+/* 滾動容器 */
+.game-area-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 800px;
+  flex-shrink: 0;
   position: relative;
 }
+/* 隱藏滾動條 */
+.game-area-wrapper::-webkit-scrollbar { display:none; }
+.game-area-wrapper { -ms-overflow-style:none; scrollbar-width:none; }
+
+/* 真正遊戲畫面 */
+#game {
+  position: relative;
+  width: 800px;
+  background: url('01.png') no-repeat center;
+  background-size: contain;
+  aspect-ratio: 3667/943;
+}
+
+/* 熱區 */
 .hotspot {
   position: absolute;
   cursor: pointer;
 }
 
-/* 右侧提示 / 道具 栏 */
-.inventory {
-  grid-row: 2;
-  grid-column: 2;
-  background: #1a1a1a;
-  border-left: 2px solid #333;
-  padding: 10px;
-  overflow-y: auto;
+/* 提示／道具 一行展示 */
+.hint-item-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 800px;
+  margin: 0 auto 10px;
 }
-.inventory h2 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  border-bottom: 1px solid #333;
-  padding-bottom: 5px;
-}
-
-/* 卡槽 Grid */
-.slots {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 60px);
-  grid-auto-rows: 60px;
-  gap: 10px;
-  padding: 10px 0;
-}
-.slot {
+.hint-item-bar .slot {
   background: #222;
   border: 1px solid #444;
   border-radius: 5px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* 隐藏原来文字标签 */
-.slot .label {
-  display: none;
-}
-/* 鼠标悬停时显示 title 的原生 tooltip */
-
-/* 对话框（放在游戏区内） */
-.dialog-box {
-  /* 去掉原来的绝对定位相关属性 */
-  position: static;
-  bottom: auto; left: auto; right: auto;
-
-  /* 流式宽度，稍微留边 */
-  width: calc(100% - 20px);
-  margin: 10px auto 0;   /* 顶部 10px，与图片分隔 */
-
-  background: rgba(0,0,0,0.8);
-  padding: 15px;
-  font-size: 20px;       /* 字体更大，便于阅读 */
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  /* 允许对话框内按钮可点击 */
-  pointer-events: auto;
-}
-.dialog-box * {
-  pointer-events: auto;
-}
-.dialog-box button {
-  background: #444;
-  border: none;
-  padding: 8px 16px;
-  color: #eee;
-  border-radius: 4px;
+  padding: 6px 10px;
   cursor: pointer;
-  transition: background .2s;
+  font-size: 14px;
 }
-.dialog-box button:hover {
-  background: #666;
+
+/* 對話框 */
+.dialog-box {
+  width: 800px;
+  margin: 0 auto 20px;
+  background: rgba(0,0,0,0.8);
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 4px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+/* ====== 手机竖屏 (9:16) 专用 ====== */
+@media only screen 
+  and (max-width: 768px)   /* 手机或小平板 */ 
+  and (orientation: portrait) {
+
+  /* 1. 让左侧面板撑满全屏、垂直排列 */
+  .left-panel {
+    width: 100vw;
+    padding: 5px;
+  }
+
+  /* 2. 时间放大一点 */
+  .top-bar {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  /* 3. 游戏区宽度自适应 */
+  .game-area-wrapper {
+    width: 100%;
+    overflow-x: scroll;    /* 如果画面太宽，就滚动 */
+    margin-bottom: 8px;
+  }
+  #game {
+    width: 100%;           /* 背景图铺满宽度 */
+    height: auto;
+    background-size: cover;
+  }
+
+  /* 隐藏左右按钮 */
+  .scroll-btn { display: none; }
+
+  /* 4. 道具栏改 Grid：4 列或更少，根据屏宽调整 */
+  .hint-item-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+    margin: 0 0 8px;
+  }
+  .hint-item-bar .slot {
+    padding: 8px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  /* 5. 对话框也铺满宽度 */
+  .dialog-box {
+    width: 100%;
+    margin: 0;
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 0;
+  }
 }
