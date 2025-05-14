@@ -113,14 +113,16 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   /* 3. 游戏区宽度自适应 */
   .game-area-wrapper {
     width: 100%;
-    overflow-x: scroll;    /* 如果画面太宽，就滚动 */
+    overflow-x: scroll;    /* 竖屏下滑动查看超出部分 */
     margin-bottom: 8px;
   }
   #game {
-    width: 100%;           /* 背景图铺满宽度 */
+    width: 100%;           /* 铺满父容器 */
     height: auto;
-    background-size: cover;
+    background-size: contain;  /* 用 contain 保证完整画面可见 */
+    background-position: center top;
   }
+
 
   /* 隐藏左右按钮 */
   .scroll-btn { display: none; }
