@@ -1,6 +1,18 @@
-/* 重置 */
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#111; color:#eee; font-family:sans-serif; }
+/* =====================
+   style.css 完整内容
+   ===================== */
+
+/* 全局重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #111;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+}
 
 /* 左側面板 */
 .left-panel {
@@ -8,34 +20,37 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  overflow: hidden;
 }
 
-/* 剩餘時間 */
+/* 頂部剩餘時間 */
 .top-bar {
   font-size: 24px;
   margin-bottom: 10px;
   text-align: center;
 }
 
-/* 控制區域：Flex 排列 */
+/* —— 遊戲畫面 + 滾動控制 —— */
+/* 控制容器 */
 .game-area-controls {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   margin-bottom: 10px;
 }
-
-/* 左右按鈕 */
+/* 左右滾動按鈕 */
 .scroll-btn {
   background: rgba(0,0,0,0.6);
   border: none;
   color: #fff;
   font-size: 24px;
-  width: 40px; height: 40px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   margin: 0 5px;
   flex-shrink: 0;
 }
-
 /* 滾動容器 */
 .game-area-wrapper {
   overflow-x: auto;
@@ -45,8 +60,8 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   position: relative;
 }
 /* 隱藏滾動條 */
-.game-area-wrapper::-webkit-scrollbar { display:none; }
-.game-area-wrapper { -ms-overflow-style:none; scrollbar-width:none; }
+.game-area-wrapper::-webkit-scrollbar { display: none; }
+.game-area-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* 真正遊戲畫面 */
 #game {
@@ -63,13 +78,14 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   cursor: pointer;
 }
 
-/* 提示／道具 一行展示 */
+/* —— 提示/道具 —— */
 .hint-item-bar {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   width: 800px;
   margin: 0 auto 10px;
+  justify-content: flex-start;
 }
 .hint-item-bar .slot {
   background: #222;
@@ -80,7 +96,7 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   font-size: 14px;
 }
 
-/* 對話框 */
+/* —— 對話框 —— */
 .dialog-box {
   width: 800px;
   margin: 0 auto 20px;
@@ -91,43 +107,41 @@ body { background:#111; color:#eee; font-family:sans-serif; }
   min-height: 60px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
-/* ====== 手机竖屏 (9:16) 专用 ====== */
-@media only screen 
-  and (max-width: 768px)   /* 手机或小平板 */ 
-  and (orientation: portrait) {
-
-  /* 1. 让左侧面板撑满全屏、垂直排列 */
+/* ============================
+   手機竪屏 (9:16) 專用適配
+   ============================ */
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+  /* 面板寬度全屏 */
   .left-panel {
     width: 100vw;
     padding: 5px;
   }
-
-  /* 2. 时间放大一点 */
+  /* 時間文字放大 */
   .top-bar {
     font-size: 28px;
     margin-bottom: 8px;
   }
-
-  /* 3. 游戏区宽度自适应 */
+  /* 滾動區於手機全寬、可拖曳 */
   .game-area-wrapper {
     width: 100%;
-    overflow-x: scroll;    /* 竖屏下滑动查看超出部分 */
+    overflow-x: scroll;
     margin-bottom: 8px;
   }
+  /* 背景完整顯示 */
   #game {
-    width: 100%;           /* 铺满父容器 */
+    width: 100%;
     height: auto;
-    background-size: contain;  /* 用 contain 保证完整画面可见 */
+    background-size: contain;
     background-position: center top;
   }
-
-
-  /* 隐藏左右按钮 */
-  .scroll-btn { display: none; }
-
-  /* 4. 道具栏改 Grid：4 列或更少，根据屏宽调整 */
+  /* 隱藏左右按鈕 */
+  .scroll-btn {
+    display: none;
+  }
+  /* 道具/提示改 Grid、4 列 */
   .hint-item-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -140,8 +154,7 @@ body { background:#111; color:#eee; font-family:sans-serif; }
     font-size: 16px;
     text-align: center;
   }
-
-  /* 5. 对话框也铺满宽度 */
+  /* 對話框全寬 */
   .dialog-box {
     width: 100%;
     margin: 0;
